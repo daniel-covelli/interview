@@ -1,4 +1,4 @@
-from test import validate
+from helpers.test import validate
 
 inputs = [{
         "name": "John",
