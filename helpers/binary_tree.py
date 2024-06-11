@@ -1,33 +1,33 @@
 from collections import deque
 
-class Node:
-    def __init__(self, val, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
 class Tree:
+    class __Node:
+        def __init__(self, val, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+
     def __init__(self, vals):
         self.root = self.__generateTree(vals)
+        self.__input = vals
 
     def __generateTree(self, vals):
         if len(vals) == 0:
             return None
-        root = Node(vals[0])
+        root = self.__Node(vals[0])
         queue = deque([root])
         vals = deque(vals[1:])
         while queue:
             curr = queue.popleft()
-            left = vals.popleft() if len(vals) else None
-            right = vals.popleft() if len(vals) else None
-            if left != None:
-                node = Node(left)
-                curr.left = node
-                queue.append(node)
-            if right != None:
-                node = Node(right)
-                curr.right = node
-                queue.append(node)
+            for i in range(2):
+                if len(vals):
+                    next = vals.popleft()
+                    node = self.__Node(next)
+                    if i:
+                        curr.right = node
+                    else:
+                        curr.left = node
+                    queue.append(node)
         return root
 
     def printTree(self):
@@ -52,3 +52,8 @@ class Tree:
                 results.append(None)
 
         return results
+
+    def isTreeValid(self):
+        return self.__input == self.printTree()
+
+print(Tree([1, 2, 3]).isTreeValid())
