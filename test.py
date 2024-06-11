@@ -1,9 +1,9 @@
-def validate(f, inputs, outputs):
 
-    for i in range(len(inputs)):
-        result = f(inputs[i])
+def validate(f, inputs, outputs):
+    for i, input in enumerate(inputs):
+        result = f(*input) if isinstance(input, list) else f(input)
         expected = outputs[i]
         if result != expected:
             print({"result": result, "expected": expected, "message": "Result not equal to expected"})
-            break
+            raise Exception("Tests failing")
         print("Test case " + str(i) + " has passed")
