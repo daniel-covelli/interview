@@ -47,13 +47,11 @@ class Tree:
             for i in range(2):
                 if len(vals):
                     next = vals.popleft()
-                    node = self.Node(next)
-                    if i:
-                        curr.right = node
-                    else:
-                        curr.left = node
-                    queue.append(node)
+                    if next:
+                        node = self.Node(next)
+                        if i:
+                            curr.right = node
+                        else:
+                            curr.left = node
+                        queue.append(node)
         return root
-
-
-print(Tree([1, None, 2, None, 3, None, 4]).isTreeValid())
