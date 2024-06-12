@@ -36,7 +36,7 @@ class User:
     def getActiveBook(self):
         if self.activeBook and self.activeBook in self.books:
             return self.books[self.activeBook].name
-        return None
+        return False
 
     def removeBook(self, bookId):
         if bookId in self.books:
@@ -63,7 +63,7 @@ class Library:
     def getAllBooks(self):
         uniqueBooks = dict()
         for user in self.__users.values():
-            for key, book in user.books:
+            for key, book in user.books.items():
                 if key not in uniqueBooks:
                     uniqueBooks[key] = book
         return [book.name for book in uniqueBooks.values()]
@@ -77,8 +77,8 @@ class Library:
     def getActiveBook(self, userId):
         if userId in self.__users:
             user = self.__users[userId]
-            return user.getActiveBooks()
-        return None
+            return user.getActiveBook()
+        return False
 
     def deleteBook(self, userId, bookId):
         if userId in self.__users:
@@ -105,29 +105,52 @@ class Library:
             return self.__users[userId].setActiveBook(bookId)
         return False
 
-def expect(index, expected, actual):
+# Tests
+def expect(testName, expected, actual):
+    print("Running: " + testName)
     if expected == actual:
-        print("Test " + str(index)+ " passed, expected " + str(expected) + " equaled " + str(actual))
+        print("Test passed, expected " + str(expected) + " equaled " + str(actual))
+        print("\n")
     else:
-        print("Test " + str(index) + " failed, Expected " + str(expected) + " did not equal actual " + str(actual))
+        print("Test failed, Expected " + str(expected) + " did not equal actual " + str(actual))
         raise Exception("Test failed :(")
 
-def test1(index):
+def test1():
     library = Library()
     library.addUser("u1")
     library.addUser("u1")
-    expect(index, ["u1"], library.getUsers())
+    expect("user added correctly", ["u1"], library.getUsers())
 
-def test2(index):
+def test2():
     library = Library()
-    library.addUser("u1")
-    library.addBook("u1", "b1", "To kill a mockingbird")
+    library.addUser("u2")
     library.addBook("u2", "b1", "To kill a mockingbird")
-    expect(index, ["To kill a mockingbird"], library.getAllBooks())
+    library.addBook("u2", "b2", "All quiet")
+    library.addUser("u1")
+    library.addBook("u1", "b1", "Should not see this name")
+    expect("books added correctly", ["To kill a mockingbird", "All quiet"], library.getAllBooks())
+
+def test3():
+    library = Library()
+    library.addUser("u2")
+    library.addBook("u2", "b1", "To kill a mockingbird")
+    library.addBook("u2", "b2", "All quiet")
+    expect("getActiveBook response correctly to a active book not being set", library.getActiveBook("u2"), False)
+    library.setActiveBook("u2", "b2")
+    expect("getActiveBook response correctly when active book is set", library.getActiveBook("u2"), "All quiet")
+
+def test4():
+    library = Library()
+    library.addUser("u2")
+    library.addBook("u2", "b1", "Mockingbird")
+    library.addBook("u2", "b2", "All quiet")
+    expect("users active books returns correctly", library.getBooks("u2"), ["Mockingbird", "All quiet"])
+    library.deleteBook("u2", "b2")
+    expect("library responds to deleting a book correctly", library.getBooks("u2"), ["Mockingbird"])
 
 def runAllTests():
-    tests = [test1, test2]
-    for i, test in enumerate(tests):
-        test(i)
+    tests = [test1, test2, test3, test4]
+    for test in tests:
+        test()
 
 runAllTests()

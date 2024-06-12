@@ -7,3 +7,4 @@ def validate(f, inputs, outputs):
             print({"result": result, "expected": expected, "message": "Result not equal to expected"})
             raise Exception("Tests failing")
         print("Test case " + str(i) + " has passed")
+
