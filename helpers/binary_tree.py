@@ -1,34 +1,9 @@
 from collections import deque
 
 class Tree:
-    class __Node:
-        def __init__(self, val, left=None, right=None):
-            self.val = val
-            self.left = left
-            self.right = right
-
     def __init__(self, vals):
         self.root = self.__generateTree(vals)
         self.__input = vals
-
-    def __generateTree(self, vals):
-        if len(vals) == 0:
-            return None
-        root = self.__Node(vals[0])
-        queue = deque([root])
-        vals = deque(vals[1:])
-        while queue:
-            curr = queue.popleft()
-            for i in range(2):
-                if len(vals):
-                    next = vals.popleft()
-                    node = self.__Node(next)
-                    if i:
-                        curr.right = node
-                    else:
-                        curr.left = node
-                    queue.append(node)
-        return root
 
     def printTree(self):
         if self.root is None:
@@ -55,5 +30,30 @@ class Tree:
 
     def isTreeValid(self):
         return self.__input == self.printTree()
+    class Node:
+        def __init__(self, val, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
 
-print(Tree([1, 2, 3]).isTreeValid())
+    def __generateTree(self, vals):
+        if len(vals) == 0:
+            return None
+        root = self.Node(vals[0])
+        queue = deque([root])
+        vals = deque(vals[1:])
+        while queue:
+            curr = queue.popleft()
+            for i in range(2):
+                if len(vals):
+                    next = vals.popleft()
+                    node = self.Node(next)
+                    if i:
+                        curr.right = node
+                    else:
+                        curr.left = node
+                    queue.append(node)
+        return root
+
+
+print(Tree([1, None, 2, None, 3, None, 4]).isTreeValid())
