@@ -1,4 +1,4 @@
-from helpers.binary_tree import Tree
+from helpers.class_tree import Tree
 from helpers.test import validate
 
 inputs = [Tree([1, 2, 3]).root, Tree([1, 2, 3, 5, 6, 7, 8, 9, 10]).root, Tree([]).root]

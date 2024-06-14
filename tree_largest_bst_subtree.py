@@ -1,4 +1,4 @@
-from helpers.binary_tree import Tree
+from helpers.class_tree import Tree
 from helpers.test import validate
 from collections import deque
 
