@@ -1,3 +1,5 @@
+from helpers.test import expect, runAllTests
+
 '''
 Create a library system:
  - Multiple users should have multiple sets of books associated with themselves
@@ -106,14 +108,7 @@ class Library:
         return False
 
 # Tests
-def expect(testName, expected, actual):
-    print("Running: " + testName)
-    if expected == actual:
-        print("Test passed, expected " + str(expected) + " equaled " + str(actual))
-        print("\n")
-    else:
-        print("Test failed, Expected " + str(expected) + " did not equal actual " + str(actual))
-        raise Exception("Test failed :(")
+
 
 def test1():
     library = Library()
@@ -148,9 +143,4 @@ def test4():
     library.deleteBook("u2", "b2")
     expect("library responds to deleting a book correctly", library.getBooks("u2"), ["Mockingbird"])
 
-def runAllTests():
-    tests = [test1, test2, test3, test4]
-    for test in tests:
-        test()
-
-runAllTests()
+runAllTests([test1, test2, test3, test4])
