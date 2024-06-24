@@ -1,5 +1,5 @@
 from helpers.test import validate
-inputs = [1, 15, 25]
+inputs = [1, 6, 15, 25]
 
 def fibonacci(i):
     cache = dict()
@@ -17,7 +17,7 @@ def fibonacci(i):
         return result
     return recurse(i)
 
-outputs = [1, 610, 75_025]
+outputs = [1,8, 610, 75_025]
 
 validate(fibonacci, inputs, outputs)
 
