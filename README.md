@@ -70,10 +70,6 @@ Each project is a self-contained React application demonstrating one or more Rea
    npm start
    ```
 
-## Contributing
-
-We welcome contributions to both the Python and React sections of this project. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to submit pull requests.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License
