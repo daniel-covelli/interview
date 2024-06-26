@@ -23,9 +23,18 @@ def list_diff(list1, list2):
                 result[str(i)] = changed(list1[i], list2[i])
     return result
 
+def orderedSet(json1, json2):
+    result = []
+    seen = set()
+    for x in list(json1.keys()) + list(json2.keys()):
+        if x not in seen:
+            result.append(x)
+            seen.add(x)
+    return result
+
 def json_diff(json1, json2):
     result = {}
-    unique_keys = set(list(json1.keys()) + list(json2.keys()))
+    unique_keys = orderedSet(json1, json2)
     for key in unique_keys:
         if key in json1 and key not in json2:
             result[key] = removed(json1[key])
