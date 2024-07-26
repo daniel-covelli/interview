@@ -1,6 +1,5 @@
 {
   "extends": "./node_modules/gts/",
-  // "ignorePatterns": ["/*", "!/src"],
   "overrides": [
     {
       "files": ["tests/**/*"],
