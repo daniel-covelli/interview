@@ -38,12 +38,3 @@ export class Bst {
     bst(val, this.root);
   }
 }
-
-const tree = new Bst(new NodeClass(0));
-tree.insert(1);
-tree.insert(2);
-tree.insert(-1);
-// tree.insert(1);
-// root.insert(1);
-
-console.log('root', tree.root);
