@@ -82,19 +82,46 @@ export class Bst {
 
     while (level.length) {
       const newLevel = [];
-
       for (const next of level) {
         results.push(next?.val);
-
         if (next && (next.left || next.right)) {
           newLevel.push(next.left);
           newLevel.push(next.right);
         }
       }
-
       level = newLevel;
     }
 
     return results;
+  }
+
+  public delete(val: number) {
+    const deleteNode = (val: number, node?: NodeClass) => {
+      if (!node) return node;
+      if (val < node.val) {
+        node.left = deleteNode(val, node.left);
+      } else if (val > node.val) {
+        node.right = deleteNode(val, node.right);
+      } else {
+        if (!node.left && !node.right) {
+          return;
+        } else if (!node.left) {
+          return node.right;
+        } else if (!node.right) {
+          return node.left;
+        } else {
+          const findSmallest = (n: NodeClass) => {
+            if (!n.left) return n;
+            return findSmallest(n.left);
+          };
+
+          const temp = findSmallest(node.right);
+          node.val = temp.val;
+          node.right = deleteNode(temp.val, node.right);
+        }
+      }
+      return node;
+    };
+    deleteNode(val, this.root);
   }
 }

@@ -107,6 +107,17 @@ describe('bst class', () => {
       expect(tree.root?.right?.left).toBeUndefined();
       expect(tree.root?.right?.right).toBeUndefined();
     });
+
+    test('will return a perfect bst', () => {
+      const tree = new Bst();
+
+      for (let i = 1; i < 8; i++) {
+        tree.insert(i);
+      }
+      tree.balance();
+
+      expect(tree.bstToArray()).toEqual([4, 2, 6, 1, 3, 5, 7]);
+    });
   });
 
   describe('bstToArray method', () => {
@@ -116,7 +127,6 @@ describe('bst class', () => {
       tree.insert(3);
       tree.insert(4);
       tree.insert(-1);
-      console.log('result', tree.bstToArray());
       expect(tree.bstToArray()).toEqual([2, 1, 3, -1, undefined, undefined, 4]);
     });
 
@@ -135,6 +145,41 @@ describe('bst class', () => {
         -1,
         undefined,
       ]);
+    });
+  });
+
+  describe('delete method', () => {
+    test('will delete a leaf node', () => {
+      const tree = new Bst(new NodeClass(1));
+      tree.insert(2);
+      tree.delete(2);
+
+      expect(tree.bstToArray()).toEqual([1]);
+    });
+
+    test('will delete a non-leaf node', () => {
+      const tree = new Bst();
+
+      for (let i = 1; i < 8; i++) {
+        tree.insert(i);
+      }
+      tree.balance();
+
+      tree.delete(6);
+
+      expect(tree.bstToArray()).toEqual([4, 2, 7, 1, 3, 5, undefined]);
+    });
+
+    test('will delete a the root node', () => {
+      const tree = new Bst();
+
+      for (let i = 1; i < 8; i++) {
+        tree.insert(i);
+      }
+      tree.balance();
+
+      tree.delete(4);
+      expect(tree.bstToArray()).toEqual([5, 2, 6, 1, 3, undefined, 7]);
     });
   });
 });
